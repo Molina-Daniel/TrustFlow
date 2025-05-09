@@ -1,6 +1,6 @@
 # TrustFlow DAO
 
-![Landing](https://github.com/Molina-Daniel/TrustFlow/blob/37fec49c8bdec8426ae8736a7947413148d325f3/Landing%20Page.png))
+![Landing](https://github.com/Molina-Daniel/TrustFlow/blob/37fec49c8bdec8426ae8736a7947413148d325f3/Landing%20Page.png)
 
 ## 🧩 Overview
 
