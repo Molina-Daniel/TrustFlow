@@ -2,7 +2,7 @@
 
 🌀 **TrustFlow** - Transparent, automated, and participatory funding for social good.
 
-![Landing)]([https://github.com/user-attachments/assets/739dfccd-6639-43a9-9bce-5771e8402cc0](https://github.com/Molina-Daniel/TrustFlow/edit/main/Landing%20Page.png))
+![Landing)](https://github.com/Molina-Daniel/TrustFlow/blob/37fec49c8bdec8426ae8736a7947413148d325f3/Landing%20Page.png))
 
 ## 🧩 Overview
 
