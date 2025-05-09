@@ -1,4 +1,4 @@
-# 📘 GovernorDAO Port – Kusama Bounty Submission (GitHub Version)
+# 📘 GovernorDAO Port – Kusama 
 
 ## ✅ What We Ported
 
