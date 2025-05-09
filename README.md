@@ -2,6 +2,8 @@
 
 🌀 **TrustFlow** - Transparent, automated, and participatory funding for social good.
 
+![Landing)]([https://github.com/user-attachments/assets/739dfccd-6639-43a9-9bce-5771e8402cc0](https://github.com/Molina-Daniel/TrustFlow/edit/main/Landing%20Page.png))
+
 ## 🧩 Overview
 
 TrustFlow is a decentralized platform for transparent, automated, and participatory funding of social impact initiatives. Its mission is to simplify the process of donating, tracking impact, and making collective decisions on the use of funds through an intuitive experience and Web3 technology.
