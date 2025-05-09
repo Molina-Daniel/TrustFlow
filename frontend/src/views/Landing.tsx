@@ -2,11 +2,14 @@ import { Button } from "../components/ui/button";
 
 const Landing = () => {
   return (
-    <div className="flex min-h-screen w-full flex-col bg-[#0F1222] text-white">
+    <div className="flex min-h-screen w-full flex-col bg-[#030A06] text-white">
       <div className="relative flex min-h-screen items-center justify-between px-12 py-8">
-        {/* Hexagon background pattern - restricted to left half with reduced opacity */}
+        {/* Blurred light effect */}
+        <div className="absolute bottom-0 left-1/4 -translate-x-1/2 rounded-full w-[600px] h-[600px] bg-[#2243D466] blur-[100px] z-0 opacity-70"></div>
+
+        {/* Hexagon background pattern - restricted to left half */}
         <div
-          className="absolute inset-y-0 left-0 z-0 w-1/2 bg-cover bg-center bg-no-repeat opacity-10 size-full hidden md:block"
+          className="absolute inset-y-0 left-0 z-0 w-1/2 bg-cover bg-center bg-no-repeat opacity-20 size-full hidden md:block"
           style={{
             backgroundImage: "url('/src/assets/hive-background.png')",
           }}
@@ -39,13 +42,13 @@ const Landing = () => {
             </div>
 
             <div className="mt-8 flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">
-              <Button className="cursor-pointer rounded-lg bg-[#0D1B3F] border-none px-8 py-6 text-white text-lg font-medium shadow-[0_0_15px_rgba(34,67,212,0.5)] hover:shadow-[0_0_20px_rgba(34,67,212,0.7)]">
+              <Button className="cursor-pointer rounded-lg bg-[#0D1B3F] border-none px-8 py-6 text-white text-lg font-medium shadow-[0_0_20px_rgba(34,67,212,0.5)] hover:shadow-[0_0_30px_rgba(34,67,212,0.7)]">
                 Book a demo
               </Button>
-              <Button className="cursor-pointer rounded-lg bg-[#0A2231] border-none px-8 py-6 text-white text-lg font-medium shadow-[0_0_15px_rgba(96,217,221,0.5)] hover:shadow-[0_0_20px_rgba(96,217,221,0.7)]">
+              <Button className="cursor-pointer rounded-lg bg-[#0A2231] border-none px-8 py-6 text-white text-lg font-medium shadow-[0_0_20px_rgba(96,217,221,0.5)] hover:shadow-[0_0_30px_rgba(96,217,221,0.7)]">
                 Connect Wallet
               </Button>
-              <Button className="cursor-pointer rounded-lg bg-[#0D1B3F] border-none px-8 py-6 text-white text-lg font-medium shadow-[0_0_15px_rgba(34,67,212,0.5)] hover:shadow-[0_0_20px_rgba(34,67,212,0.7)]">
+              <Button className="cursor-pointer rounded-lg bg-[#0D1B3F] border-none px-8 py-6 text-white text-lg font-medium shadow-[0_0_20px_rgba(34,67,212,0.5)] hover:shadow-[0_0_30px_rgba(34,67,212,0.7)]">
                 Explore Impact
               </Button>
             </div>

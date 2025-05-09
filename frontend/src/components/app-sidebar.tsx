@@ -1,0 +1,134 @@
+import type React from "react";
+import {
+  BarChartIcon,
+  HelpCircleIcon,
+  HomeIcon,
+  LayersIcon,
+  LogOutIcon,
+  PackageIcon,
+  SettingsIcon,
+  ShieldIcon,
+  UserIcon,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarSeparator,
+} from "@/components/ui/sidebar";
+
+const navItems = [
+  {
+    title: "Dashboard",
+    icon: HomeIcon,
+    url: "#",
+    isActive: true,
+  },
+  {
+    title: "Categories",
+    icon: LayersIcon,
+    url: "#",
+  },
+  {
+    title: "My Donations",
+    icon: PackageIcon,
+    url: "#",
+  },
+  {
+    title: "Proposals",
+    icon: BarChartIcon,
+    url: "#",
+    indented: true,
+  },
+  {
+    title: "Accounts",
+    icon: UserIcon,
+    url: "#",
+  },
+  {
+    title: "Settings",
+    icon: SettingsIcon,
+    url: "#",
+  },
+];
+
+const bottomNavItems = [
+  {
+    title: "Security",
+    icon: ShieldIcon,
+    url: "#",
+  },
+  {
+    title: "Help Centre",
+    icon: HelpCircleIcon,
+    url: "#",
+  },
+];
+
+export function AppSidebar({
+  className,
+}: React.ComponentProps<typeof Sidebar>) {
+  return (
+    <Sidebar className={cn("border-r-0 text-white", className)}>
+      <SidebarContent>
+        <SidebarMenu>
+          {navItems.map((item) => (
+            <SidebarMenuItem key={item.title}>
+              <SidebarMenuButton
+                asChild
+                isActive={item.isActive}
+                className={cn(
+                  "h-10 px-4 justify-start text-gray-300 hover:text-white hover:bg-[#2a3a5a]",
+                  item.isActive && "bg-[#2a3a5a] text-white",
+                  item.indented && "pl-8"
+                )}
+              >
+                <a href={item.url}>
+                  <item.icon className="h-5 w-5" />
+                  <span>{item.title}</span>
+                </a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+
+        <SidebarSeparator className="my-4 mx-2 bg-[#4B4B99]" />
+
+        <SidebarMenu>
+          {bottomNavItems.map((item) => (
+            <SidebarMenuItem key={item.title}>
+              <SidebarMenuButton
+                asChild
+                className="h-10 px-4 justify-start text-gray-300 hover:text-white hover:bg-[#2a3a5a]"
+              >
+                <a href={item.url}>
+                  <item.icon className="h-5 w-5" />
+                  <span>{item.title}</span>
+                </a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              className="h-10 px-4 justify-start text-gray-300 hover:text-white hover:bg-[#2a3a5a]"
+            >
+              <a href="#">
+                <LogOutIcon className="h-5 w-5" />
+                <span>Logout</span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarContent>
+      <SidebarFooter className="pb-4">
+        <div className="flex justify-center">0x1234..7890</div>
+      </SidebarFooter>
+    </Sidebar>
+  );
+}
