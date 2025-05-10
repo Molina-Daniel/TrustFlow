@@ -1,6 +1,6 @@
 # 📘 GovernorDAO Port – Kusama Integration for TrustFlow
 
-## 🔷 What is GovernorDAO and How Does It Work on Kusama?
+## 🔷 What is GovernorDAO on Kusama?
 
 **GovernorDAO** is a modular governance smart contract system originally developed for Ethereum. It allows decentralized organizations to manage decision-making through on-chain proposals and voting. In TrustFlow, we have **ported this system to Kusama** using the Moonriver EVM-compatible parachain, enabling fully decentralized governance for social impact funding.
 
