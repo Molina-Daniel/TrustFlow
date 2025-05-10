@@ -1,5 +1,6 @@
 # TrustFlow
 
+
 ## 🔷 What is TrustFlow?
 
 **TrustFlow** is a decentralized public funding infrastructure powered by a **DAO deployed on Kusama**. It enables individuals, organizations, and communities to **propose, vote on, and fund verified social impact initiatives** in a transparent, participatory, and permissionless way.
