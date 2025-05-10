@@ -1,3 +1,9 @@
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -6,6 +12,7 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
+import DonationDialog from "./modals/donation-dialog";
 
 interface FeaturedProposalProps {
   title: string;
@@ -65,9 +72,30 @@ export function FeaturedProposal({
         </p>
       </CardContent>
       <CardFooter className="flex gap-2 p-4 pt-0">
-        <Button className="flex-1 bg-green-600 hover:bg-green-700 cursor-pointer">
-          Donate
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button className="flex-1 bg-green-600 hover:bg-green-700 cursor-pointer">
+              Donate
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="bg-[#202020] text-white sm:max-w-4xl">
+            <DialogTitle className="sr-only">
+              Legal Aid for Marginalized Youth
+            </DialogTitle>
+            <DonationDialog
+              title={title}
+              imageUrl={image}
+              daysLeft={daysLeft}
+              category={category}
+              description="Provide legal consultations and court representation for 40+ low-income youth in urban areas"
+              requestedAmount={requested}
+              currency="TF"
+              raisedAmount="312"
+              percentageFunded={26}
+              target="40 youth · Urban justice access"
+            />
+          </DialogContent>
+        </Dialog>
         <Button
           variant="outline"
           className="flex-1 bg-[#0D1B3F] border-none text-white hover:bg-[#2a3a5a] hover:text-white cursor-pointer"
