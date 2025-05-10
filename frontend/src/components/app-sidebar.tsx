@@ -1,14 +1,15 @@
 import type React from "react";
+import { Link, useLocation } from "react-router";
 import {
-  BarChartIcon,
+  GavelIcon,
+  HandHeartIcon,
   HelpCircleIcon,
   HomeIcon,
   LayersIcon,
   LogOutIcon,
-  PackageIcon,
   SettingsIcon,
   ShieldIcon,
-  UserIcon,
+  SquarePenIcon,
 } from "lucide-react";
 import { useAccount, useDisconnect } from "wagmi";
 import { cn } from "@/lib/utils";
@@ -26,28 +27,26 @@ const navItems = [
   {
     title: "Dashboard",
     icon: HomeIcon,
-    url: "#",
-    isActive: true,
+    url: "/",
   },
   {
     title: "Categories",
     icon: LayersIcon,
+    url: "/categories",
+  },
+  {
+    title: "Fund Projects",
+    icon: HandHeartIcon,
     url: "#",
   },
   {
-    title: "My Donations",
-    icon: PackageIcon,
+    title: "Vote Proposal",
+    icon: GavelIcon,
     url: "#",
   },
   {
-    title: "Proposals",
-    icon: BarChartIcon,
-    url: "#",
-    indented: true,
-  },
-  {
-    title: "Accounts",
-    icon: UserIcon,
+    title: "Make Proposal",
+    icon: SquarePenIcon,
     url: "#",
   },
   {
@@ -73,32 +72,36 @@ const bottomNavItems = [
 export function AppSidebar({
   className,
 }: React.ComponentProps<typeof Sidebar>) {
+  const location = useLocation();
   const { address } = useAccount();
   const { disconnect } = useDisconnect();
+
   const shortAddress = address?.slice(0, 6) + "..." + address?.slice(-4);
 
   return (
     <Sidebar className={cn("border-r-0 text-white pt-5", className)}>
       <SidebarContent>
         <SidebarMenu>
-          {navItems.map((item) => (
-            <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton
-                asChild
-                isActive={item.isActive}
-                className={cn(
-                  "h-10 px-4 justify-start text-gray-300 hover:text-white hover:bg-[#2a3a5a]",
-                  item.isActive && "bg-[#2a3a5a] text-white",
-                  item.indented && "pl-8"
-                )}
-              >
-                <a href={item.url}>
-                  <item.icon className="h-5 w-5" />
-                  <span>{item.title}</span>
-                </a>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
+          {navItems.map((item) => {
+            const isActive = location.pathname === item.url;
+            return (
+              <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton
+                  asChild
+                  isActive={isActive}
+                  className={cn(
+                    "h-10 px-4 justify-start text-gray-300 hover:text-white hover:bg-[#2a3a5a]",
+                    isActive && "bg-[#2a3a5a] text-white"
+                  )}
+                >
+                  <Link to={item.url}>
+                    <item.icon className="h-5 w-5" />
+                    <span>{item.title}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            );
+          })}
         </SidebarMenu>
 
         <SidebarSeparator className="my-4 mx-2 bg-[#4B4B99]" />
@@ -126,7 +129,7 @@ export function AppSidebar({
             >
               <a href="#">
                 <LogOutIcon className="h-5 w-5" />
-                <span>Logout</span>
+                <span>Disconnect</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
