@@ -10,8 +10,9 @@ import {
   SettingsIcon,
   ShieldIcon,
   SquarePenIcon,
+  WalletIcon,
 } from "lucide-react";
-import { useAccount, useDisconnect } from "wagmi";
+import { useAccount, useBalance, useDisconnect } from "wagmi";
 import { cn } from "@/lib/utils";
 import {
   Sidebar,
@@ -22,6 +23,7 @@ import {
   SidebarMenuItem,
   SidebarSeparator,
 } from "@/components/ui/sidebar";
+import { formatEther } from "viem";
 
 const navItems = [
   {
@@ -75,6 +77,17 @@ export function AppSidebar({
   const location = useLocation();
   const { address } = useAccount();
   const { disconnect } = useDisconnect();
+
+  // For native WND token balance
+  const { data: wndBalance } = useBalance({
+    address,
+  });
+
+  // For TF governance token
+  const { data: tfBalance } = useBalance({
+    address,
+    token: "0xA36a9239A7D70B38DDe5cbAA5394dFd46f33cb4e", // GovToken address
+  });
 
   const shortAddress = address?.slice(0, 6) + "..." + address?.slice(-4);
 
@@ -134,8 +147,55 @@ export function AppSidebar({
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
+
+        <SidebarSeparator className="my-4 mx-2 bg-[#4B4B99]" />
+
+        <SidebarMenu>
+          <SidebarMenuItem className="flex items-center justify-center gap-2 mb-2">
+            <WalletIcon className="h-5 w-5" />
+            <p className="text-white text-md text-center">Your Balance</p>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              className="h-10 px-4 justify-center text-gray-300 hover:text-white hover:bg-[#2a3a5a]"
+            >
+              <div>
+                <img
+                  src="/src/assets/polkadot-symbol.png"
+                  alt="WND"
+                  className="h-6 w-auto"
+                />
+                <span className="text-white text-md -ml-2">
+                  WND:{" "}
+                  {wndBalance
+                    ? parseFloat(formatEther(wndBalance.value)).toFixed(4)
+                    : "0.0000"}
+                </span>
+              </div>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              className="h-10 px-4 justify-center text-gray-300 hover:text-white hover:bg-[#2a3a5a]"
+            >
+              <div>
+                <img src="/public/logo.svg" alt="WND" className="h-6 w-auto" />
+                <span>
+                  TF:{" "}
+                  {tfBalance
+                    ? parseFloat(formatEther(tfBalance.value)).toFixed(4)
+                    : "0.0000"}
+                </span>
+              </div>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
       </SidebarContent>
+
       <SidebarFooter className="pb-4">
+        <div className="flex justify-center">Wallet Address</div>
         <div className="flex justify-center">{shortAddress}</div>
       </SidebarFooter>
     </Sidebar>
