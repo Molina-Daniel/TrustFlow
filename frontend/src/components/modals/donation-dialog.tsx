@@ -2,7 +2,7 @@ import { Button } from "../ui/button";
 import { DialogDescription } from "../ui/dialog";
 import { Progress } from "../ui/progress";
 import { Input } from "../ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -44,6 +44,28 @@ const RECORD_DEPOSIT_ABI = {
   stateMutability: "payable",
 };
 
+const SET_ACCEPTED_TOKEN_ABI = {
+  name: "setAcceptedToken",
+  type: "function",
+  inputs: [
+    { name: "token", type: "address" },
+    { name: "allowed", type: "bool" },
+  ],
+  outputs: [],
+  stateMutability: "nonpayable",
+};
+
+const SET_INITIATIVE_WALLET_ABI = {
+  name: "setInitiativeWallet",
+  type: "function",
+  inputs: [
+    { name: "initiativeId", type: "string" },
+    { name: "wallet", type: "address" },
+  ],
+  outputs: [],
+  stateMutability: "nonpayable",
+};
+
 interface DonationDialogProps {
   title: string;
   imageUrl: string;
@@ -73,6 +95,8 @@ const DonationDialog = ({
   const [selectedCrypto, setSelectedCrypto] = useState("USDC");
   const [transactionError, setTransactionError] = useState<string | null>(null);
   const [donationStatus, setDonationStatus] = useState<string | null>(null);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [initiativeId, setInitiativeId] = useState("");
 
   const { data: hash, isPending, sendTransaction } = useSendTransaction();
   const { address } = useAccount();
@@ -82,16 +106,16 @@ const DonationDialog = ({
       hash,
     });
 
-  const handleDonation = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setTransactionError(null);
-    setDonationStatus(null);
-
-    if (!donationAmount || parseFloat(donationAmount) <= 0) {
-      setTransactionError("Please enter a valid donation amount");
-      return;
+  // After transaction is confirmed, move to the next step
+  // This will trigger whenever isConfirmed changes to true
+  useEffect(() => {
+    if (isConfirmed && currentStep < 2) {
+      setCurrentStep((prev) => prev + 1);
+      executeCurrentStep();
     }
+  }, [isConfirmed]);
 
+  const executeCurrentStep = async () => {
     if (!address) {
       setTransactionError("Please connect your wallet first");
       return;
@@ -103,26 +127,49 @@ const DonationDialog = ({
       const isNativeToken =
         tokenAddress === "0x0000000000000000000000000000000000000000";
 
-      // Generate a unique initiative ID using the title and a timestamp
-      // This helps avoid collisions if there are multiple donations with the same title
-      const initiativeId = `${title}_${Date.now()}`;
+      // Create a unique initiative ID if not already set
+      if (initiativeId === "") {
+        const newInitiativeId = `${title.replace(/\s+/g, "_")}_${Date.now()}`;
+        setInitiativeId(newInitiativeId);
+      }
 
-      // Encode the function data for the recordDeposit function call
-      const data = encodeFunctionData({
-        abi: [RECORD_DEPOSIT_ABI],
-        functionName: "recordDeposit",
-        args: [tokenAddress, initiativeId, parsedAmount],
-      });
+      let data;
+      let value = 0n;
 
-      setDonationStatus(
-        "Note: The contract owner must approve the token and set the initiative wallet before your donation can be processed."
-      );
+      // Step 1: Set the token as accepted
+      if (currentStep === 0) {
+        setDonationStatus("Step 1/3: Setting token as accepted...");
+        data = encodeFunctionData({
+          abi: [SET_ACCEPTED_TOKEN_ABI],
+          functionName: "setAcceptedToken",
+          args: [tokenAddress, true],
+        });
+      }
+      // Step 2: Set the initiative wallet
+      else if (currentStep === 1) {
+        setDonationStatus("Step 2/3: Setting initiative wallet...");
+        data = encodeFunctionData({
+          abi: [SET_INITIATIVE_WALLET_ABI],
+          functionName: "setInitiativeWallet",
+          args: [initiativeId, address],
+        });
+      }
+      // Step 3: Make the actual deposit
+      else if (currentStep === 2) {
+        setDonationStatus("Step 3/3: Processing donation...");
+        data = encodeFunctionData({
+          abi: [RECORD_DEPOSIT_ABI],
+          functionName: "recordDeposit",
+          args: [tokenAddress, initiativeId, parsedAmount],
+        });
+        value = isNativeToken ? parsedAmount : 0n;
+      }
 
       // Send the transaction
       sendTransaction({
         to: FUNDING_MANAGER_ADDRESS,
         data,
-        value: isNativeToken ? parsedAmount : 0n, // Only send value if using native token
+        value,
       });
     } catch (error) {
       console.error("Error sending transaction:", error);
@@ -130,6 +177,21 @@ const DonationDialog = ({
         (error as BaseError).shortMessage || "Transaction failed"
       );
     }
+  };
+
+  const handleDonation = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setTransactionError(null);
+    setDonationStatus(null);
+    setCurrentStep(0);
+    setInitiativeId("");
+
+    if (!donationAmount || parseFloat(donationAmount) <= 0) {
+      setTransactionError("Please enter a valid donation amount");
+      return;
+    }
+
+    executeCurrentStep();
   };
 
   return (
@@ -214,10 +276,12 @@ const DonationDialog = ({
                     onChange={(e) => setDonationAmount(e.target.value)}
                     className="flex-1 bg-zinc-800 border-zinc-700 text-white"
                     required
+                    disabled={currentStep > 0}
                   />
                   <Select
                     value={selectedCrypto}
                     onValueChange={setSelectedCrypto}
+                    disabled={currentStep > 0}
                   >
                     <SelectTrigger className="w-24 bg-zinc-800 border-zinc-700 text-white">
                       <SelectValue placeholder="Currency" />
@@ -235,21 +299,36 @@ const DonationDialog = ({
               </div>
             </div>
 
-            <Button
-              type="submit"
-              disabled={isPending || isConfirming}
-              className="bg-[#37672C] hover:bg-green-600 cursor-pointer min-w-[200px]"
-            >
-              {isPending
-                ? "Confirming..."
-                : isConfirming
-                ? "Processing..."
-                : "Donate Now"}
-            </Button>
+            {currentStep === 0 && (
+              <Button
+                type="submit"
+                disabled={isPending || isConfirming}
+                className="bg-[#37672C] hover:bg-green-600 cursor-pointer min-w-[200px]"
+              >
+                {isPending ? "Confirming..." : "Donate Now"}
+              </Button>
+            )}
 
-            {donationStatus && (
-              <div className="text-yellow-400 text-sm mt-2">
-                {donationStatus}
+            {currentStep > 0 && (
+              <div className="mt-4 bg-zinc-800 p-4 rounded-md border border-zinc-700">
+                <div className="flex items-center mb-3">
+                  <div className="w-6 h-6 rounded-full flex items-center justify-center bg-zinc-700 text-white mr-2">
+                    {currentStep}/3
+                  </div>
+                  <div className="text-white font-medium">{donationStatus}</div>
+                </div>
+                <div className="w-full bg-zinc-700 h-2 rounded-full overflow-hidden">
+                  <div
+                    className="bg-green-500 h-full"
+                    style={{ width: `${(currentStep / 3) * 100}%` }}
+                  ></div>
+                </div>
+              </div>
+            )}
+
+            {initiativeId && (
+              <div className="text-zinc-400 text-sm mt-2">
+                Initiative ID: {initiativeId}
               </div>
             )}
 
@@ -269,7 +348,7 @@ const DonationDialog = ({
                 Waiting for confirmation...
               </div>
             )}
-            {isConfirmed && (
+            {isConfirmed && currentStep === 3 && (
               <div className="text-green-500 text-sm mt-2">
                 Donation confirmed! Thank you for your support.
               </div>
