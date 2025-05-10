@@ -12,9 +12,7 @@ In this MVP version (**testnet**), users can donate any amount using a **simulat
 
 ![Landing](https://github.com/Molina-Daniel/TrustFlow/blob/37fec49c8bdec8426ae8736a7947413148d325f3/Landing%20Page.png)
 
-## 🧩 Overview
 
-TrustFlow is a decentralized platform for transparent, automated, and participatory funding of social impact initiatives. Its mission is to simplify the process of donating, tracking impact, and making collective decisions on the use of funds through an intuitive experience and Web3 technology.
 
 ## 🧠 How It Works
 
@@ -119,6 +117,6 @@ TrustFlow will integrate an AI-powered swap agent that:
 
 This will enable seamless donations from any chain or currency, lowering friction for contributors around the world.
 
-💡 Why TrustFlow?
+## 💡 Why TrustFlow?
 Because social impact deserves transparency, automation, and community-driven governance.
 
