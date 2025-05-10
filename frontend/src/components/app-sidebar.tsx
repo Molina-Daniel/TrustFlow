@@ -10,6 +10,7 @@ import {
   ShieldIcon,
   UserIcon,
 } from "lucide-react";
+import { useAccount, useDisconnect } from "wagmi";
 import { cn } from "@/lib/utils";
 import {
   Sidebar,
@@ -72,6 +73,10 @@ const bottomNavItems = [
 export function AppSidebar({
   className,
 }: React.ComponentProps<typeof Sidebar>) {
+  const { address } = useAccount();
+  const { disconnect } = useDisconnect();
+  const shortAddress = address?.slice(0, 6) + "..." + address?.slice(-4);
+
   return (
     <Sidebar className={cn("border-r-0 text-white pt-5", className)}>
       <SidebarContent>
@@ -117,6 +122,7 @@ export function AppSidebar({
             <SidebarMenuButton
               asChild
               className="h-10 px-4 justify-start text-gray-300 hover:text-white hover:bg-[#2a3a5a]"
+              onClick={() => disconnect()}
             >
               <a href="#">
                 <LogOutIcon className="h-5 w-5" />
@@ -127,7 +133,7 @@ export function AppSidebar({
         </SidebarMenu>
       </SidebarContent>
       <SidebarFooter className="pb-4">
-        <div className="flex justify-center">0x1234..7890</div>
+        <div className="flex justify-center">{shortAddress}</div>
       </SidebarFooter>
     </Sidebar>
   );

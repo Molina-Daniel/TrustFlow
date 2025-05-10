@@ -1,4 +1,5 @@
 import { Button } from "../components/ui/button";
+import ConnectWalletButton from "@/components/connect-wallet-button";
 
 const Landing = () => {
   return (
@@ -45,9 +46,7 @@ const Landing = () => {
               <Button className="cursor-pointer rounded-lg bg-[#0D1B3F] border-none px-8 py-6 text-white text-lg font-medium shadow-[0_0_20px_rgba(34,67,212,0.5)] hover:shadow-[0_0_30px_rgba(34,67,212,0.7)]">
                 Book a demo
               </Button>
-              <Button className="cursor-pointer rounded-lg bg-[#0A2231] border-none px-8 py-6 text-white text-lg font-medium shadow-[0_0_20px_rgba(96,217,221,0.5)] hover:shadow-[0_0_30px_rgba(96,217,221,0.7)]">
-                Connect Wallet
-              </Button>
+              <ConnectWalletButton />
               <Button className="cursor-pointer rounded-lg bg-[#0D1B3F] border-none px-8 py-6 text-white text-lg font-medium shadow-[0_0_20px_rgba(34,67,212,0.5)] hover:shadow-[0_0_30px_rgba(34,67,212,0.7)]">
                 Explore Impact
               </Button>
