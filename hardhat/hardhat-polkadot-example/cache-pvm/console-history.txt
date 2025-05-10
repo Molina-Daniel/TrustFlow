@@ -1,0 +1,2 @@
+console.log("Saldo WND:", (await ethers.provider.getBalance(acct.address)).toString());
+const [acct] = await ethers.getSigners();
