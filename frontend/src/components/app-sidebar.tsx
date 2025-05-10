@@ -73,7 +73,7 @@ export function AppSidebar({
   className,
 }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar className={cn("border-r-0 text-white", className)}>
+    <Sidebar className={cn("border-r-0 text-white pt-5", className)}>
       <SidebarContent>
         <SidebarMenu>
           {navItems.map((item) => (
