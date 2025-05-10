@@ -8,7 +8,7 @@ const topProposals = [
     id: "1",
     title: "LGBTQ+ Legal Support Fund",
     user: "Poma3",
-    userImage: "/placeholder.svg?height=40&width=40&text=P3",
+    userImage: "/src/assets/top-proposal-1.jpg",
     userFallback: "P3",
     voted: false,
   },
@@ -16,7 +16,7 @@ const topProposals = [
     id: "2",
     title: "Rights for Indigenous Voices",
     user: "Poma1",
-    userImage: "/placeholder.svg?height=40&width=40&text=P1",
+    userImage: "/src/assets/top-proposal-2.png",
     userFallback: "P1",
     voted: true,
   },
@@ -24,7 +24,7 @@ const topProposals = [
     id: "3",
     title: "Prison Reform Outreach",
     user: "Leinard",
-    userImage: "/placeholder.svg?height=40&width=40&text=LD",
+    userImage: "/src/assets/top-proposal-1.jpg",
     userFallback: "LD",
     voted: true,
   },
@@ -32,7 +32,7 @@ const topProposals = [
     id: "4",
     title: "JusticeTech Access Hubs",
     user: "Omope",
-    userImage: "/placeholder.svg?height=40&width=40&text=OM",
+    userImage: "/src/assets/top-proposal-2.png",
     userFallback: "OM",
     voted: false,
   },
@@ -49,7 +49,7 @@ const Dashboard = () => {
         <div className="space-y-6">
           <FeaturedProposal
             title="Legal Aid for Marginalized Youth"
-            image="/placeholder.svg?height=200&width=400&text=Legal+Aid"
+            image="/src/assets/featured-proposal.jpg"
             daysLeft={5}
             requested="1,200 xDAI"
             category="Social Justice & Civil Rights"

@@ -22,7 +22,7 @@ export function ProposalBanner() {
             </h2>
           </div>
         </div>
-        <Button className="mt-6 px-8 py-2 bg-blue-600 hover:bg-blue-700 rounded-md w-fit text-lg">
+        <Button className="mt-6 px-8 py-2 bg-blue-600 hover:bg-blue-700 rounded-md w-fit text-lg cursor-pointer">
           Explore now
         </Button>
       </div>

@@ -25,7 +25,7 @@ export function FeaturedProposal({
   categoryLink,
 }: FeaturedProposalProps) {
   return (
-    <Card className="overflow-hidden bg-[#1e2b45] border-[#2a3a5a] text-white">
+    <Card className="overflow-hidden bg-[#1e2b45] border-[#2a3a5a] text-white p-0">
       <CardHeader className="p-0">
         <div className="relative">
           <img
@@ -35,7 +35,9 @@ export function FeaturedProposal({
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
           <div className="absolute right-3 top-3">
-            <Badge className="bg-green-500 text-white">Voting open</Badge>
+            <Badge className="bg-green-500 text-white px-4 py-1 text-md">
+              Promoted 🔥
+            </Badge>
           </div>
           <div className="absolute bottom-3 left-3">
             <Badge
@@ -63,12 +65,12 @@ export function FeaturedProposal({
         </p>
       </CardContent>
       <CardFooter className="flex gap-2 p-4 pt-0">
-        <Button className="flex-1 bg-green-600 hover:bg-green-700">
+        <Button className="flex-1 bg-green-600 hover:bg-green-700 cursor-pointer">
           Donate
         </Button>
         <Button
           variant="outline"
-          className="flex-1 border-[#3a4a6a] text-white hover:bg-[#2a3a5a]"
+          className="flex-1 bg-[#0D1B3F] border-none text-white hover:bg-[#2a3a5a] hover:text-white cursor-pointer"
         >
           Track
         </Button>
