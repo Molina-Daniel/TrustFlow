@@ -26,14 +26,15 @@ import type {
 export interface FundingManagerInterface extends Interface {
   getFunction(
     nameOrSignature:
+      | "acceptedTokens"
       | "distribute"
       | "donated"
       | "govToken"
       | "owner"
       | "recordDeposit"
       | "renounceOwnership"
+      | "setAcceptedToken"
       | "setInitiativeWallet"
-      | "stableToken"
       | "totalByInitiative"
       | "transferOwnership"
       | "walletByInitiative"
@@ -43,38 +44,44 @@ export interface FundingManagerInterface extends Interface {
     nameOrSignatureOrTopic:
       | "DepositRecorded"
       | "Distributed"
+      | "InitiativeWalletSet"
       | "OwnershipTransferred"
+      | "TokenAccepted"
   ): EventFragment;
 
   encodeFunctionData(
+    functionFragment: "acceptedTokens",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
     functionFragment: "distribute",
-    values: [string, BigNumberish]
+    values: [AddressLike, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "donated",
-    values: [AddressLike, string]
+    values: [AddressLike, string, AddressLike]
   ): string;
   encodeFunctionData(functionFragment: "govToken", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "recordDeposit",
-    values: [string, BigNumberish]
+    values: [AddressLike, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "setAcceptedToken",
+    values: [AddressLike, boolean]
+  ): string;
+  encodeFunctionData(
     functionFragment: "setInitiativeWallet",
     values: [string, AddressLike]
   ): string;
   encodeFunctionData(
-    functionFragment: "stableToken",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
     functionFragment: "totalByInitiative",
-    values: [string]
+    values: [AddressLike, string]
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
@@ -85,6 +92,10 @@ export interface FundingManagerInterface extends Interface {
     values: [string]
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "acceptedTokens",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "distribute", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "donated", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "govToken", data: BytesLike): Result;
@@ -98,11 +109,11 @@ export interface FundingManagerInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setInitiativeWallet",
+    functionFragment: "setAcceptedToken",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "stableToken",
+    functionFragment: "setInitiativeWallet",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -122,16 +133,19 @@ export interface FundingManagerInterface extends Interface {
 export namespace DepositRecordedEvent {
   export type InputTuple = [
     donor: AddressLike,
+    token: AddressLike,
     amount: BigNumberish,
     initiativeId: string
   ];
   export type OutputTuple = [
     donor: string,
+    token: string,
     amount: bigint,
     initiativeId: string
   ];
   export interface OutputObject {
     donor: string;
+    token: string;
     amount: bigint;
     initiativeId: string;
   }
@@ -143,15 +157,35 @@ export namespace DepositRecordedEvent {
 
 export namespace DistributedEvent {
   export type InputTuple = [
+    token: AddressLike,
     initiativeId: string,
     to: AddressLike,
     amount: BigNumberish
   ];
-  export type OutputTuple = [initiativeId: string, to: string, amount: bigint];
+  export type OutputTuple = [
+    token: string,
+    initiativeId: string,
+    to: string,
+    amount: bigint
+  ];
   export interface OutputObject {
+    token: string;
     initiativeId: string;
     to: string;
     amount: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace InitiativeWalletSetEvent {
+  export type InputTuple = [initiativeId: string, wallet: AddressLike];
+  export type OutputTuple = [initiativeId: string, wallet: string];
+  export interface OutputObject {
+    initiativeId: string;
+    wallet: string;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -165,6 +199,19 @@ export namespace OwnershipTransferredEvent {
   export interface OutputObject {
     previousOwner: string;
     newOwner: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace TokenAcceptedEvent {
+  export type InputTuple = [token: AddressLike, accepted: boolean];
+  export type OutputTuple = [token: string, accepted: boolean];
+  export interface OutputObject {
+    token: string;
+    accepted: boolean;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -215,14 +262,16 @@ export interface FundingManager extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
+  acceptedTokens: TypedContractMethod<[arg0: AddressLike], [boolean], "view">;
+
   distribute: TypedContractMethod<
-    [initiativeId: string, amount: BigNumberish],
+    [token: AddressLike, initiativeId: string, amount: BigNumberish],
     [void],
     "nonpayable"
   >;
 
   donated: TypedContractMethod<
-    [arg0: AddressLike, arg1: string],
+    [arg0: AddressLike, arg1: string, arg2: AddressLike],
     [bigint],
     "view"
   >;
@@ -232,12 +281,18 @@ export interface FundingManager extends BaseContract {
   owner: TypedContractMethod<[], [string], "view">;
 
   recordDeposit: TypedContractMethod<
-    [initiativeId: string, amount: BigNumberish],
+    [token: AddressLike, initiativeId: string, amount: BigNumberish],
     [void],
-    "nonpayable"
+    "payable"
   >;
 
   renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
+
+  setAcceptedToken: TypedContractMethod<
+    [token: AddressLike, allowed: boolean],
+    [void],
+    "nonpayable"
+  >;
 
   setInitiativeWallet: TypedContractMethod<
     [initiativeId: string, wallet: AddressLike],
@@ -245,9 +300,11 @@ export interface FundingManager extends BaseContract {
     "nonpayable"
   >;
 
-  stableToken: TypedContractMethod<[], [string], "view">;
-
-  totalByInitiative: TypedContractMethod<[arg0: string], [bigint], "view">;
+  totalByInitiative: TypedContractMethod<
+    [arg0: AddressLike, arg1: string],
+    [bigint],
+    "view"
+  >;
 
   transferOwnership: TypedContractMethod<
     [newOwner: AddressLike],
@@ -262,15 +319,22 @@ export interface FundingManager extends BaseContract {
   ): T;
 
   getFunction(
+    nameOrSignature: "acceptedTokens"
+  ): TypedContractMethod<[arg0: AddressLike], [boolean], "view">;
+  getFunction(
     nameOrSignature: "distribute"
   ): TypedContractMethod<
-    [initiativeId: string, amount: BigNumberish],
+    [token: AddressLike, initiativeId: string, amount: BigNumberish],
     [void],
     "nonpayable"
   >;
   getFunction(
     nameOrSignature: "donated"
-  ): TypedContractMethod<[arg0: AddressLike, arg1: string], [bigint], "view">;
+  ): TypedContractMethod<
+    [arg0: AddressLike, arg1: string, arg2: AddressLike],
+    [bigint],
+    "view"
+  >;
   getFunction(
     nameOrSignature: "govToken"
   ): TypedContractMethod<[], [string], "view">;
@@ -280,13 +344,20 @@ export interface FundingManager extends BaseContract {
   getFunction(
     nameOrSignature: "recordDeposit"
   ): TypedContractMethod<
-    [initiativeId: string, amount: BigNumberish],
+    [token: AddressLike, initiativeId: string, amount: BigNumberish],
     [void],
-    "nonpayable"
+    "payable"
   >;
   getFunction(
     nameOrSignature: "renounceOwnership"
   ): TypedContractMethod<[], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "setAcceptedToken"
+  ): TypedContractMethod<
+    [token: AddressLike, allowed: boolean],
+    [void],
+    "nonpayable"
+  >;
   getFunction(
     nameOrSignature: "setInitiativeWallet"
   ): TypedContractMethod<
@@ -295,11 +366,8 @@ export interface FundingManager extends BaseContract {
     "nonpayable"
   >;
   getFunction(
-    nameOrSignature: "stableToken"
-  ): TypedContractMethod<[], [string], "view">;
-  getFunction(
     nameOrSignature: "totalByInitiative"
-  ): TypedContractMethod<[arg0: string], [bigint], "view">;
+  ): TypedContractMethod<[arg0: AddressLike, arg1: string], [bigint], "view">;
   getFunction(
     nameOrSignature: "transferOwnership"
   ): TypedContractMethod<[newOwner: AddressLike], [void], "nonpayable">;
@@ -322,15 +390,29 @@ export interface FundingManager extends BaseContract {
     DistributedEvent.OutputObject
   >;
   getEvent(
+    key: "InitiativeWalletSet"
+  ): TypedContractEvent<
+    InitiativeWalletSetEvent.InputTuple,
+    InitiativeWalletSetEvent.OutputTuple,
+    InitiativeWalletSetEvent.OutputObject
+  >;
+  getEvent(
     key: "OwnershipTransferred"
   ): TypedContractEvent<
     OwnershipTransferredEvent.InputTuple,
     OwnershipTransferredEvent.OutputTuple,
     OwnershipTransferredEvent.OutputObject
   >;
+  getEvent(
+    key: "TokenAccepted"
+  ): TypedContractEvent<
+    TokenAcceptedEvent.InputTuple,
+    TokenAcceptedEvent.OutputTuple,
+    TokenAcceptedEvent.OutputObject
+  >;
 
   filters: {
-    "DepositRecorded(address,uint256,string)": TypedContractEvent<
+    "DepositRecorded(address,address,uint256,string)": TypedContractEvent<
       DepositRecordedEvent.InputTuple,
       DepositRecordedEvent.OutputTuple,
       DepositRecordedEvent.OutputObject
@@ -341,7 +423,7 @@ export interface FundingManager extends BaseContract {
       DepositRecordedEvent.OutputObject
     >;
 
-    "Distributed(string,address,uint256)": TypedContractEvent<
+    "Distributed(address,string,address,uint256)": TypedContractEvent<
       DistributedEvent.InputTuple,
       DistributedEvent.OutputTuple,
       DistributedEvent.OutputObject
@@ -350,6 +432,17 @@ export interface FundingManager extends BaseContract {
       DistributedEvent.InputTuple,
       DistributedEvent.OutputTuple,
       DistributedEvent.OutputObject
+    >;
+
+    "InitiativeWalletSet(string,address)": TypedContractEvent<
+      InitiativeWalletSetEvent.InputTuple,
+      InitiativeWalletSetEvent.OutputTuple,
+      InitiativeWalletSetEvent.OutputObject
+    >;
+    InitiativeWalletSet: TypedContractEvent<
+      InitiativeWalletSetEvent.InputTuple,
+      InitiativeWalletSetEvent.OutputTuple,
+      InitiativeWalletSetEvent.OutputObject
     >;
 
     "OwnershipTransferred(address,address)": TypedContractEvent<
@@ -361,6 +454,17 @@ export interface FundingManager extends BaseContract {
       OwnershipTransferredEvent.InputTuple,
       OwnershipTransferredEvent.OutputTuple,
       OwnershipTransferredEvent.OutputObject
+    >;
+
+    "TokenAccepted(address,bool)": TypedContractEvent<
+      TokenAcceptedEvent.InputTuple,
+      TokenAcceptedEvent.OutputTuple,
+      TokenAcceptedEvent.OutputObject
+    >;
+    TokenAccepted: TypedContractEvent<
+      TokenAcceptedEvent.InputTuple,
+      TokenAcceptedEvent.OutputTuple,
+      TokenAcceptedEvent.OutputObject
     >;
   };
 }
