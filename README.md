@@ -1,4 +1,14 @@
-# TrustFlow DAO
+# TrustFlow
+
+## 🔷 What is TrustFlow?
+
+**TrustFlow** is a decentralized public funding infrastructure powered by a **DAO deployed on Kusama**. It enables individuals, organizations, and communities to **propose, vote on, and fund verified social impact initiatives** in a transparent, participatory, and permissionless way.
+
+In this MVP version (**testnet**), users can donate any amount using a **simulated stablecoin (TFL)**. Upon donation, they automatically receive **TF**, a **non-transferable governance token** (1 TF = 1 vote), which grants the right to:
+
+- 📝 Create verified funding proposals  
+- 🗳️ Vote on initiatives they want to support
+
 
 ![Landing](https://github.com/Molina-Daniel/TrustFlow/blob/37fec49c8bdec8426ae8736a7947413148d325f3/Landing%20Page.png)
 
@@ -6,24 +16,38 @@
 
 TrustFlow is a decentralized platform for transparent, automated, and participatory funding of social impact initiatives. Its mission is to simplify the process of donating, tracking impact, and making collective decisions on the use of funds through an intuitive experience and Web3 technology.
 
-## What Makes It Different?
+## 🧠 How It Works
 
-Unlike other ReFi projects, this platform relies on three innovative pillars:
+### ✅ Direct Donation  
+Users donate using the simulated stablecoin TFL.  
+There’s no need to purchase anything. For every 1 TFL donated, the user receives 1 TF token.
 
-- **Complete On-chain Traceability**: All donations are recorded on the blockchain (e.g., Kusama), ensuring transparency, verifiable history, and accountability.
+### ✅ Open Governance  
+Anyone holding TF can participate in DAO decision-making:
+1. Fill out the proposal submission form  
+2. Verify their identity using an **AI Agent powered by the Olas SDK**
 
-- **Decentralized and Automated Governance**: Decisions on which initiatives to fund are made through community votes on Snapshot or directly on-chain, integrating customized governance smart contracts (GovernorDAO or Moloch V2).
+### ✅ Decentralized Validation  
+Proposals are submitted directly to the DAO.  
+They are approved if they receive at least **10% of the total TF votes in circulation**.  
+All governance is handled through smart contracts deployed on **Kusama**.
 
-- **AI-Powered Autonomous Agents (Olas)**: An intelligent agent analyzes donation history and impact data to automatically propose new initiatives for voting, reducing friction and improving process efficiency.
+
 
 ## 🚀 Getting Started
 
-TrustFlow is composed of several modular components:
+TrustFlow is composed of several modular smart contracts:
 
-- **FundingManager** – Smart contract that registers donations and associates them with users.
-- **GovernanceModule** – DAO contracts (GovernorDAO/Moloch V2) deployed on Kusama for funding proposals and voting.
-- **ImpactAgent** – Autonomous Olas agent that analyzes on-chain donation data and automatically generates new proposals.
-- **xDAI Logger** – Webhook that logs off-chain GnosisPay payments for xDAI donations.
+| Component             | Function                                                                 |
+|-----------------------|--------------------------------------------------------------------------|
+| `GovToken.sol`        | Non-transferable governance token (TF)                                   |
+| `FundingManager.sol`  | Accepts donations and mints TF to users                                  |
+| `TrustFlow.sol`       | Coordinates proposal creation and voting logic                           |
+| `StableErc20.sol`     | Simulated stablecoin (TFL) for testnet usage                             |
+| `ImpactAgent` (future) | AI agent powered by Olas SDK for identity verification and automation    |
+
+---
+
 
 ### ⚙️ Quick Setup
 
@@ -49,30 +73,52 @@ You can use each component separately depending on your needs:
 ## 📁 Project Structure
 
 ```
-/contracts            # Smart contracts (Kusama)
+/contracts            # Smart contracts (Kusama testnet)
+  GovToken.sol
   FundingManager.sol
-  GovernanceModule.sol
+  TrustFlow.sol
+  StableErc20.sol
+
 /scripts              # Deployment scripts
-/agents               # Olas AI agents
-/webhook              # GnosisPay xDAI logger
-/frontend             # React-based dashboard (optional)
+/frontend             # React-based user dashboard
 /docs                 # Architecture, diagrams, specs
+
 ```
 
+## 🔍 Key Features
+🌐 Full on-chain traceability of all donations on Kusama
+
+🗳️ Open DAO governance via smart contracts (no Snapshot)
+
+🧠 Identity verification with AI Agents (Olas SDK)
+
+⚡ Simple participation: just donate to start voting or proposing
+
 ## 🔒 Security Notes
+- Always deploy to testnet before mainnet
 
-Ensure to:
+- Validate logic of AI agents before registration
 
-- Use testnet deployments before mainnet.
-- Verify agent proposal logic.
-- Secure webhook endpoints.
+- Secure any webhook integrations in future modules
 
 ## 📌 Next Steps
+- Register TrustFlow DAO on Kusama
 
-Before going live:
+- Launch AI agent for identity verification
 
-- Register the project DAO on-chain
+- Expand proposal taxonomy for more impact categories
 
-## 💡 Why TrustFlow?
+## 🔮 Coming Soon...
+TrustFlow will integrate an AI-powered swap agent that:
 
+- Detects crypto assets like ETH, BTC, or MATIC
+
+- Fetches real-time prices
+
+- Converts any token into a selected stablecoin during donation
+
+This will enable seamless donations from any chain or currency, lowering friction for contributors around the world.
+
+💡 Why TrustFlow?
 Because social impact deserves transparency, automation, and community-driven governance.
+
