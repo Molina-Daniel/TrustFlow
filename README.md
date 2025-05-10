@@ -10,7 +10,7 @@ In this MVP version (**testnet**), users can donate any amount using a **simulat
 - 🗳️ Vote on initiatives they want to support
 
 
-![Landing](https://github.com/Molina-Daniel/TrustFlow/blob/37fec49c8bdec8426ae8736a7947413148d325f3/Landing%20Page.png)
+![Landing]([https://github.com/Molina-Daniel/TrustFlow/blob/37fec49c8bdec8426ae8736a7947413148d325f3/Landing%20Page.png](https://github.com/Molina-Daniel/TrustFlow/blob/main/frontend/Landing.jpeg)
 
 
 
