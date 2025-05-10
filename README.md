@@ -1,6 +1,6 @@
 # TrustFlow
 
-
+Desk Pitch: https://www.figma.com/proto/a7ksdWdaUDVmX1ahLIyuNv/ETHLISBON-2025?node-id=2013-315&t=eJjnLXLmsVFrGq5b-1&scaling=min-zoom&content-scaling=fixed&page-id=8%3A2&starting-point-node-id=2013%3A315
 ## 🔷 What is TrustFlow?
 
 **TrustFlow** is a decentralized public funding infrastructure powered by a **DAO deployed on Kusama**. It enables individuals, organizations, and communities to **propose, vote on, and fund verified social impact initiatives** in a transparent, participatory, and permissionless way.
