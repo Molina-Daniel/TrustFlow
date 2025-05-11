@@ -13,6 +13,7 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import DonationDialog from "./modals/donation-dialog";
+import { HandHeartIcon, SearchIcon, SparklesIcon } from "lucide-react";
 
 interface FeaturedProposalProps {
   title: string;
@@ -21,6 +22,8 @@ interface FeaturedProposalProps {
   requested: string;
   category: string;
   categoryLink: string;
+  isPromoted?: boolean;
+  onResearch?: () => void;
 }
 
 export function FeaturedProposal({
@@ -30,6 +33,8 @@ export function FeaturedProposal({
   requested,
   category,
   categoryLink,
+  isPromoted = false,
+  onResearch,
 }: FeaturedProposalProps) {
   return (
     <Card className="overflow-hidden bg-[#1e2b45] border-[#2a3a5a] text-white p-0">
@@ -41,11 +46,13 @@ export function FeaturedProposal({
             className="h-52 w-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-          <div className="absolute right-3 top-3">
-            <Badge className="bg-green-500 text-white px-4 py-1 text-md">
-              Promoted 🔥
-            </Badge>
-          </div>
+          {isPromoted && (
+            <div className="absolute right-3 top-3">
+              <Badge className="bg-green-500 text-white px-4 py-1 text-md">
+                Promoted 🔥
+              </Badge>
+            </div>
+          )}
           <div className="absolute bottom-3 left-3">
             <Badge
               variant="outline"
@@ -76,6 +83,7 @@ export function FeaturedProposal({
         <Dialog>
           <DialogTrigger asChild>
             <Button className="flex-1 bg-green-600 hover:bg-green-700 cursor-pointer">
+              <HandHeartIcon className="w-4 h-4" />
               Donate
             </Button>
           </DialogTrigger>
@@ -97,12 +105,24 @@ export function FeaturedProposal({
             />
           </DialogContent>
         </Dialog>
-        <Button
-          variant="outline"
-          className="flex-1 bg-[#0D1B3F] border-none text-white hover:bg-[#2a3a5a] hover:text-white cursor-pointer"
-        >
-          Track
-        </Button>
+        {isPromoted ? (
+          <Button
+            variant="outline"
+            className="flex-1 bg-[#0D1B3F] border-none text-white hover:bg-[#2a3a5a] hover:text-white cursor-pointer"
+          >
+            <SearchIcon className="w-4 h-4" />
+            Explore
+          </Button>
+        ) : (
+          <Button
+            variant="outline"
+            className="flex-1 bg-[#0D1B3F] border-none text-white hover:bg-[#2a3a5a] hover:text-white cursor-pointer"
+            onClick={onResearch}
+          >
+            <SparklesIcon className="w-4 h-4" />
+            Research
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );

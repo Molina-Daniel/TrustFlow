@@ -1,6 +1,6 @@
 import { ChevronDownIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ProposalCard } from "@/components/proposal-card";
+import { CategoriesCard } from "./categories-card";
 
 const categories = [
   {
@@ -49,7 +49,7 @@ export function CategoriesSection() {
       </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {categories.map((category) => (
-          <ProposalCard
+          <CategoriesCard
             key={category.title}
             title={category.title}
             category={category.title}

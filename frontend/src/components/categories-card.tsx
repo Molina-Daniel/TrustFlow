@@ -9,7 +9,7 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 
-interface ProposalCardProps {
+interface CategoriesCardProps {
   title: string;
   category: string;
   image: string;
@@ -17,13 +17,13 @@ interface ProposalCardProps {
   users: { image: string; fallback: string }[];
 }
 
-export function ProposalCard({
+export function CategoriesCard({
   title,
   category,
   image,
   count,
   users,
-}: ProposalCardProps) {
+}: CategoriesCardProps) {
   return (
     <Card className="overflow-hidden border-[#2a3a5a] p-0 h-full">
       <CardHeader className="p-0">

@@ -54,6 +54,7 @@ const Dashboard = () => {
             requested="1,200"
             category="Social Justice & Civil Rights"
             categoryLink="#"
+            isPromoted={true}
           />
           <TopProposals proposals={topProposals} />
         </div>

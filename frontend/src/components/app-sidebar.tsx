@@ -39,22 +39,22 @@ const navItems = [
   {
     title: "Fund Projects",
     icon: HandHeartIcon,
-    url: "#",
+    url: "/found-projects",
   },
   {
     title: "Vote Proposal",
     icon: GavelIcon,
-    url: "#",
+    url: "/vote-proposal",
   },
   {
     title: "Make Proposal",
     icon: SquarePenIcon,
-    url: "#",
+    url: "/make-proposal",
   },
   {
     title: "Settings",
     icon: SettingsIcon,
-    url: "#",
+    url: "/settings",
   },
 ];
 
@@ -62,12 +62,12 @@ const bottomNavItems = [
   {
     title: "Security",
     icon: ShieldIcon,
-    url: "#",
+    url: "/security",
   },
   {
     title: "Help Centre",
     icon: HelpCircleIcon,
-    url: "#",
+    url: "/help-centre",
   },
 ];
 
