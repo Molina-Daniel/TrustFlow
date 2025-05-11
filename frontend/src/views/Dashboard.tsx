@@ -51,7 +51,7 @@ const Dashboard = () => {
             title="Legal Aid for Marginalized Youth"
             image="/src/assets/featured-proposal.jpg"
             daysLeft={5}
-            requested="1,200 xDAI"
+            requested="1,200"
             category="Social Justice & Civil Rights"
             categoryLink="#"
           />

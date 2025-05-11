@@ -59,7 +59,8 @@ export function FeaturedProposal({
       <CardContent className="p-4">
         <h3 className="text-xl font-semibold">{title}</h3>
         <p className="mt-2 text-sm text-gray-300">
-          Requested: <span className="font-medium text-white">{requested}</span>
+          Requested:{" "}
+          <span className="font-medium text-white">${requested}</span>
         </p>
         <p className="mt-1 text-sm text-gray-300">
           Category:{" "}
@@ -87,9 +88,9 @@ export function FeaturedProposal({
               imageUrl={image}
               daysLeft={daysLeft}
               category={category}
-              description="Provide legal consultations and court representation for 40+ low-income youth in urban areas"
+              description="Provide legal consultations and court representation for 40+ low-income youth in urban areas."
               requestedAmount={requested}
-              currency="TF"
+              currency="$"
               raisedAmount="312"
               percentageFunded={26}
               target="40 youth · Urban justice access"

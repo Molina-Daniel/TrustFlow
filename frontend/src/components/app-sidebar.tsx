@@ -181,7 +181,7 @@ export function AppSidebar({
               className="h-10 px-4 justify-center text-gray-300 hover:text-white hover:bg-[#2a3a5a]"
             >
               <div>
-                <img src="/public/logo.svg" alt="WND" className="h-6 w-auto" />
+                <img src="/logo.svg" alt="WND" className="h-6 w-auto" />
                 <span>
                   TF:{" "}
                   {tfBalance

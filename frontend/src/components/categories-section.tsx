@@ -5,7 +5,7 @@ import { ProposalCard } from "@/components/proposal-card";
 const categories = [
   {
     title: "Social Justice & Civil Rights",
-    image: "/src/assets/category-1.jpg",
+    image: "/src/assets/category-1.png",
     count: 150,
     users: [
       { image: "/src/assets/user-1.jpg", fallback: "U1" },
@@ -15,7 +15,7 @@ const categories = [
   },
   {
     title: "Inclusion & Disability",
-    image: "/src/assets/category-2.jpg",
+    image: "/src/assets/category-2.png",
     count: 20,
     users: [
       { image: "/src/assets/user-4.jpg", fallback: "U4" },
