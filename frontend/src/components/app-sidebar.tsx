@@ -162,7 +162,7 @@ export function AppSidebar({
             >
               <div>
                 <img
-                  src="/src/assets/polkadot-symbol.png"
+                  src="/polkadot-symbol.png"
                   alt="WND"
                   className="h-6 w-auto"
                 />

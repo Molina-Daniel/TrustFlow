@@ -33,21 +33,21 @@ const foundableProposals = [
     daysLeft: 5,
     requested: "1,200",
     category: "Social Justice & Civil Rights",
-    imageUrl: "/src/assets/featured-proposal.jpg",
+    imageUrl: "/featured-proposal.jpg",
   },
   {
     title: "Rights for Indigenous Voices",
     daysLeft: 3,
     requested: "3,000",
     category: "Women & Equal Opportunity",
-    imageUrl: "/src/assets/top-proposal-1.jpg",
+    imageUrl: "/top-proposal-1.jpg",
   },
   {
     title: "Prison Reform Outreach",
     daysLeft: 10,
     requested: "8,500",
     category: "Inclusion & Disability",
-    imageUrl: "/src/assets/top-proposal-2.png",
+    imageUrl: "/top-proposal-2.png",
   },
 ];
 

@@ -12,7 +12,7 @@ const Landing = () => {
         <div
           className="absolute inset-y-0 left-0 z-0 w-1/2 bg-cover bg-center bg-no-repeat opacity-20 size-full hidden md:block"
           style={{
-            backgroundImage: "url('/src/assets/hive-background.png')",
+            backgroundImage: "url('/hive-background.png')",
           }}
         />
 
@@ -21,7 +21,7 @@ const Landing = () => {
           {/* Left side - Logo */}
           <div className="w-1/2 hidden md:block">
             <img
-              src="/src/assets/trustflow-logo.svg"
+              src="/trustflow-logo.svg"
               alt="TrustFlow Logo"
               className="h-auto w-[500px]"
             />
@@ -30,7 +30,7 @@ const Landing = () => {
           {/* Right side - Title and description */}
           <div className="flex w-full flex-col items-center justify-center space-y-4 md:w-1/2">
             <img
-              src="/src/assets/trustflow-title.svg"
+              src="/trustflow-title.svg"
               alt="TrustFlow"
               className="h-auto w-[500px]"
             />

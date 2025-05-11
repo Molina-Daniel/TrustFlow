@@ -15,7 +15,7 @@ const AppLayout = () => {
           <div
             className="absolute inset-y-0 right-0 z-0 w-1/2 bg-cover bg-center bg-no-repeat opacity-20 size-full hidden md:block"
             style={{
-              backgroundImage: "url('/src/assets/hive-background.png')",
+              backgroundImage: "url('/hive-background.png')",
             }}
           />
 

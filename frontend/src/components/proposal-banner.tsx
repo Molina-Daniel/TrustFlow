@@ -6,7 +6,7 @@ export function ProposalBanner() {
       <div
         className="absolute inset-0 bg-cover bg-right"
         style={{
-          backgroundImage: "url('/src/assets/make-proposal-bg-image.jpg')",
+          backgroundImage: "url('/make-proposal-bg-image.jpg')",
         }}
       />
       <div className="absolute inset-0 bg-gradient-to-r from-black via-black/100 to-transparent" />

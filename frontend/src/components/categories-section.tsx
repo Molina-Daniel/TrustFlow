@@ -5,32 +5,32 @@ import { CategoriesCard } from "./categories-card";
 const categories = [
   {
     title: "Social Justice & Civil Rights",
-    image: "/src/assets/category-1.png",
+    image: "/category-1.png",
     count: 150,
     users: [
-      { image: "/src/assets/user-1.jpg", fallback: "U1" },
-      { image: "/src/assets/user-2.jpg", fallback: "U2" },
-      { image: "/src/assets/user-3.jpg", fallback: "U3" },
+      { image: "/user-1.jpg", fallback: "U1" },
+      { image: "/user-2.jpg", fallback: "U2" },
+      { image: "/user-3.jpg", fallback: "U3" },
     ],
   },
   {
     title: "Inclusion & Disability",
-    image: "/src/assets/category-2.png",
+    image: "/category-2.png",
     count: 20,
     users: [
-      { image: "/src/assets/user-4.jpg", fallback: "U4" },
-      { image: "/src/assets/user-5.jpg", fallback: "U5" },
-      { image: "/src/assets/user-6.jpg", fallback: "U6" },
+      { image: "/user-4.jpg", fallback: "U4" },
+      { image: "/user-5.jpg", fallback: "U5" },
+      { image: "/user-6.jpg", fallback: "U6" },
     ],
   },
   {
     title: "Women & Equal Opportunity",
-    image: "/src/assets/category-3.jpg",
+    image: "/category-3.jpg",
     count: 30,
     users: [
-      { image: "/src/assets/user-5.jpg", fallback: "U5" },
-      { image: "/src/assets/user-6.jpg", fallback: "U6" },
-      { image: "/src/assets/user-7.jpg", fallback: "U7" },
+      { image: "/user-5.jpg", fallback: "U5" },
+      { image: "/user-6.jpg", fallback: "U6" },
+      { image: "/user-7.jpg", fallback: "U7" },
     ],
   },
 ];
